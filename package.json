@@ -1,0 +1,18 @@
+{
+  "name": "@hansjovis/sharkdown",
+  "description": "Markdown with a twist.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "/index.js",
+  "bin": {
+    "parse-sharkdown": "/bin/parse-sharkdown.js"
+  },
+  "scripts": {
+    "compile": "rm -rf ./dist && npx tsc",
+    "test": "cd test && npx tsc && node --test ./dist/test"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "typescript": "^5.4.5"
+  }
+}
