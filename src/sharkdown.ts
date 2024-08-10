@@ -29,6 +29,7 @@ export function parseTokens(tokens: Token[], blockParsers: BlockParser[] = []): 
             case "Image":               child = parseImage(tokens); break;
             case "TableRow":            child = parseTable(tokens); break;
             case "Text":                child = parseParagraph(tokens); break;
+            case "BlockEnd":            tokens.shift(); return doc;
             default:                    child = null; tokens.shift(); break;
         }
         if (child) {

@@ -4,7 +4,7 @@ import { BlockEnd } from "../../tokenize/block/tokens/BlockEnd.js";
 
 import Block from "../../document/block/Block.js";
 
-import parseSharkdown from "../../sharkdown.js";
+import { parseTokens } from "../../sharkdown.js";
 import BlockParser from "../../extend/BlockParser.js";
 
 export default function parse(tokens: Token[], blockParsers: BlockParser[] = []): Block {
@@ -16,17 +16,7 @@ export default function parse(tokens: Token[], blockParsers: BlockParser[] = [])
         token.attributes,
     );
     
-    let contents = "";
-    while(tokens[0] && tokens[0].constructor.name !== "BlockEnd") {
-        const token = tokens.shift() as BlockEnd;
-        contents += `\n${token.rawContents}`;
-        if(token.type && token.type === block.blockType) {
-            break;
-        }
-    }
-
-    const doc = parseSharkdown(contents);
-    block.children = doc.children;
+    block.children = parseTokens(tokens).children;
 
     if(block.blockType.match(/^[A-Z]/)) {
         // Custom block (starts with a capital letter).
