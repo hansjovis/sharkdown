@@ -12,6 +12,7 @@ import UnorderedList from "../document/block/UnorderedList.js";
 
 import Strong from "../document/inline/Strong.js";
 import Emphasis from "../document/inline/Emphasis.js";
+import Anchor from "../document/inline/Anchor.js";
 
 export default function toHTML(document: Document): string {
     if (!document) {
@@ -50,6 +51,7 @@ function inlineListToHTML(nodes: any[]): string {
         switch(node['@type']) {
             case "Strong":      str += strong(node); break;
             case "Emphasis":    str += em(node); break;
+            case "Anchor":      str += anchor(node); break;
         }
     }
     return str;
@@ -82,6 +84,10 @@ function strong(node: Strong): string {
 
 function em(node: Emphasis): string {
     return `<em>${inlineListToHTML(node.children)}</em>`;
+}
+
+function anchor(node: Anchor): string {
+    return `<a href="${node.href}">${inlineListToHTML(node.children)}</a>`;
 }
 
 function h(node: Header): string {

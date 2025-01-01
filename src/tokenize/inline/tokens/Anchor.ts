@@ -1,5 +1,5 @@
 export default class Anchor {
-    public static readonly regex = /\[.+\]\(.+\)/;
+    public static readonly regex = /\[(.+)\]\((.+)\)/;
 
     constructor(
         public readonly raw: string,
@@ -10,8 +10,8 @@ export default class Anchor {
     public static fromMatch(match: RegExpMatchArray): Anchor {
         return new Anchor(
             match[0],
+            match[2],
             match[1],
-            match[2]
         );
     }
 }
