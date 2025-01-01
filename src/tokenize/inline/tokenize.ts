@@ -20,7 +20,7 @@ export default function tokenize(text: string): any[] {
             if (match) {
                 return Token.fromMatch(match);
             }
-            return new Text(string);
         }
+        return new Text(string);
     });
 }
