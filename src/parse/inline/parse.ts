@@ -13,7 +13,6 @@ import parseCode from "./code.js";
 
 export default function parse(text: string): any[] {
     const tokens = tokenize(text);
-    console.log(tokens);
     const elements = [];
     while(tokens[0]) {
         const name = tokens[0].constructor;
