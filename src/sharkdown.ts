@@ -12,20 +12,20 @@ import parseParagraph from "./parse/block/paragraph.js";
 import parseTable from "./parse/block/table.js";
 
 import tokenize from "./tokenize/block/tokenize.js";
-import BlockParser from "./extend/BlockParser.js";
+import { defaultParseConfiguration, ParseConfiguration } from "./ParseConfiguration.js";
 
-export function parseTokens(tokens: Token[], blockParsers: BlockParser[] = []): Document {
+export function parseTokens(tokens: Token[], config: ParseConfiguration = defaultParseConfiguration): Document {
     const doc = new Document();
     while(tokens[0]) {
         const name = tokens[0].constructor.name;
         let child;
         switch(name) {
-            case "Block":               child = parseBlock(tokens, blockParsers); break;
+            case "Block":               child = parseBlock(tokens, config); break;
             case "Header":              child = parseHeader(tokens); break;
             case "Code":                child = parseCode(tokens); break;
-            case "UnorderedListItem":   child = parseUnorderedList(tokens); break;
-            case "OrderedListItem":     child = parseOrderedList(tokens); break;
-            case "Quote":               child = parseQuote(tokens); break;
+            case "UnorderedListItem":   child = parseUnorderedList(tokens, config); break;
+            case "OrderedListItem":     child = parseOrderedList(tokens, config); break;
+            case "Quote":               child = parseQuote(tokens, config); break;
             case "Image":               child = parseImage(tokens); break;
             case "TableRow":            child = parseTable(tokens); break;
             case "Text":                child = parseParagraph(tokens); break;
@@ -39,7 +39,7 @@ export function parseTokens(tokens: Token[], blockParsers: BlockParser[] = []): 
     return doc;
 }
 
-export default function parse(text: string, blockParsers: BlockParser[] = []): Document {
+export default function parse(text: string, config: ParseConfiguration = defaultParseConfiguration): Document {
     const tokens = tokenize(text);
-    return parseTokens(tokens, blockParsers);
+    return parseTokens(tokens, config);
 }

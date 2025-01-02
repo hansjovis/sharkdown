@@ -2,8 +2,9 @@ import Quote from "../../document/block/Quote.js";
 import { Token } from "../../tokenize/block/tokens/Token.js";
 import { Quote as QuoteToken } from "../../tokenize/block/tokens/Quote.js";
 import parseSharkdown from "../../sharkdown.js";
+import { ParseConfiguration } from "../../ParseConfiguration.js";
 
-export default function parse(tokens: Token[]): Quote {
+export default function parse(tokens: Token[], config: ParseConfiguration): Quote {
     let token = tokens.shift() as QuoteToken;
     const quote = new Quote();
 
@@ -13,7 +14,7 @@ export default function parse(tokens: Token[]): Quote {
         contents += `\n${token.contents}`;
     }
 
-    const doc = parseSharkdown(contents);
+    const doc = parseSharkdown(contents, config);
     quote.children = doc.children;
 
     return quote;
