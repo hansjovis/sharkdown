@@ -77,5 +77,5 @@ generate();
     ```
 4. Run tests.
     ```
-    npm run test
+    npm test
     ```

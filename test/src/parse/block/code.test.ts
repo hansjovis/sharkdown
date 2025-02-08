@@ -1,8 +1,8 @@
 import { it } from "node:test";
 import { strictEqual } from "node:assert/strict";
 
-import tokenize from "../../../../src/markdown/tokenize/tokenize";
-import parse from "../../../../src/markdown/parse/elements/code";
+import tokenize from "../../../../src/tokenize/block/tokenize.js";
+import parse from "../../../../src/parse/block/code.js";
 
 it("can parse a simple code block", () => {
     const text = `\`\`\`javascript

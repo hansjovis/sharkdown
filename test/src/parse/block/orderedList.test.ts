@@ -1,8 +1,8 @@
 import { it } from "node:test";
-
-import tokenize from "../../../../src/markdown/tokenize/tokenize";
-import parse from "../../../../src/markdown/parse/elements/orderedList";
 import { strictEqual } from "node:assert";
+
+import tokenize from "../../../../src/tokenize/block/tokenize.js";
+import parse from "../../../../src/parse/block/orderedList.js";
 
 it("can parse a simple ordered list", () => {
     const text = `1. A simple
