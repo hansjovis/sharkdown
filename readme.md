@@ -8,23 +8,42 @@ An extendable Markdown parser.
 
 [Sharkdown syntax](/docs/sharkdown-syntax.md);
 
-### Functions
-
-#### `parse(text, blockParsers): Document`
+### Parse a string of markdown text
+```
+parse(text: string, config: ParseConfiguration = defaultParseConfiguration): Document
+```
 Parses source code into a Sharkdown document.
 
-##### Parameters
+#### Parameters
 - `text: string` - The source code to parse.
-- `blockParsers: BlockParser[] = []` - An array of Block parsers (optional).
+- `config: ParseConfiguration` - Parse configuration.
+
+#### Sample configuration:
+```ts
+const config: ParseConfiguration = {
+    blocks: {
+        // Parsers for custom blocks.
+        parsers: [],
+    },
+    elements: {
+        // Allowed custom elements.
+        allowed: ["div", "aside", "section", "article", "header", "footer", "nav", "main", "figure", "figcaption"],
+    },
+    attributes: {
+        // Allowed attributes on custom elements.
+        allowed: ["style", /^data-.+/, /^aria-.+/],
+    },
+}
+```
 
 ### Example
-```ts
+```js
 #!/usr/bin/env node
 import { readFile, writeFile } from "fs/promises";
 
 import { parse, toHTML } from "@hansjovis/sharkdown";
 
-async function generate(): void {
+async function generate() {
     const [ inFile, outFile ] = process.argv.slice(2);
 
     if (!inFile) {
