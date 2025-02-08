@@ -1,5 +1,5 @@
 export default class Anchor {
-    public static readonly regex = /\[(.+)\]\((.+?)\)/;
+    public static readonly regex = /\[(.+?)\]\((.+?)\)/;
 
     constructor(
         public readonly raw: string,

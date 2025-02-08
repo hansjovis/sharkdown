@@ -7,7 +7,7 @@ export default function parse(tokens: any[]): Anchor {
     const anchor = new Anchor(token.url);
     tokens.shift(); // Link text.
 
-    anchor.children = parseInline(token.text);
+    anchor.children = [token.text];
     tokens.shift(); // URL.
 
     return anchor;

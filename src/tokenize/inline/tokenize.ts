@@ -5,7 +5,7 @@ import Strong from "./tokens/Strong.js";
 import Text from "./tokens/Text.js";
 
 const Tokens = [
-    Strong, Emphasis, Anchor, Code,
+    Anchor, Strong, Emphasis, Code,
 ];
 
 // const tokenizeRegex = /(\*\*|_|\[.+\]\(.+\)|.+)/;
