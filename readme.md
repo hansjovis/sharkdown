@@ -79,3 +79,8 @@ generate();
     ```
     npm test
     ```
+5. Run parser on sample document.
+    ```
+    echo "# Hello world!" > test.md
+    ./bin/parse-sharkdown.js test.md
+    ```
