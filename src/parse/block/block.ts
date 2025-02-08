@@ -6,13 +6,14 @@ import Block from "../../document/block/Block.js";
 import { parseTokens } from "../../sharkdown.js";
 import { ParseConfiguration } from "../../ParseConfiguration.js";
 
-const isAttributeAllowed = (allowedAttribute: string|RegExp, key: string) => {
-    return typeof allowedAttribute === "string" 
-        ? key === allowedAttribute 
-        : key.match(allowedAttribute);
+function isAttributeAllowed(allowedAttribute: string|RegExp, key: string) {
+    if (typeof allowedAttribute === "string") {
+        return key === allowedAttribute;
+    }
+    return key.match(allowedAttribute) !== null;
 }
 
-const isAllowed = (allowedAttributes: (string|RegExp)[], key: string) => {
+function isAllowed(allowedAttributes: (string|RegExp)[], key: string) {
     return allowedAttributes.some(allowedAttribute => isAttributeAllowed(allowedAttribute, key));
 }
 
@@ -28,7 +29,7 @@ function filterAllowedAttributes(attributes: Record<string, string>, allowed: (s
     return filtered;
 }
 
-export default function parse(tokens: Token[], config: ParseConfiguration): Block {
+export default function parse(tokens: Token[], config: ParseConfiguration): Block|null {
     let token = tokens.shift() as BlockToken;
 
     if (config.elements.allowed.includes(token.type) === false) {
