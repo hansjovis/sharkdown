@@ -59,6 +59,15 @@ function inlineListToHTML(nodes: any[]): string {
     return str;
 }
 
+function attributesToHTML(attributes: Record<string,any>): string {
+    if (Object.keys(attributes).length === 0) {
+        return "";
+    }
+    return " " + Object.entries(attributes)
+        .map(([key, value]) => `${key}='${value}'`)
+        .join(" ");
+}
+
 function block(node: Block): string {
     if (node.blockType.match(/^[A-Z]/)) {
         // Unrecognized block.
@@ -73,65 +82,63 @@ function block(node: Block): string {
         ? ` class="${node.classes.join(" ")}"` 
         : "";
 
-    const attributes = Object.entries(node.attributes)
-        .map(([key, value]) => `${key}='${value}'`)
-        .join(" ");
+    const attributes = attributesToHTML(node.attributes);
         
-    return `<${node.blockType}${id}${classes} ${attributes}>${listToHTML(node.children)}</${node.blockType}>`;
+    return `<${node.blockType}${id}${classes}${attributes}>${listToHTML(node.children)}</${node.blockType}>`;
 }
 
 function strong(node: Strong): string {
-    return `<strong>${inlineListToHTML(node.children)}</strong>`;
+    return `<strong${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</strong>`;
 }
 
 function em(node: Emphasis): string {
-    return `<em>${inlineListToHTML(node.children)}</em>`;
+    return `<em${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</em>`;
 }
 
 function anchor(node: Anchor): string {
-    return `<a href="${node.href}">${inlineListToHTML(node.children)}</a>`;
+    return `<a href="${node.href}"${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</a>`;
 }
 
 function code(node: InlineCode): string {
-    return `<code>${node.text}</code>`;
+    return `<code${attributesToHTML(node.attributes)}>${node.text}</code>`;
 }
 
 function h(node: Header): string {
-    return `<h${node.level}>${inlineListToHTML(node.children)}</h${node.level}>`
+    return `<h${node.level}${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</h${node.level}>`
 }
 
 function pre(node: Code): string {
-    return `<pre class="${node.language}">${node.children.join("\n")}</pre>`;
+    return `<pre class="${node.language}"${attributesToHTML(node.attributes)}>${node.children.join("\n")}</pre>`;
 }
 
 function blockquote(node: Quote): string {
-    return `<blockquote>${listToHTML(node.children)}</blockquote>`;
+    return `<blockquote${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</blockquote>`;
 }
 
 function ul(node: UnorderedList): string {
-    return `<ul>${listToHTML(node.children)}</ul>`;
+    return `<ul${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</ul>`;
 }
 
 function ol(node: OrderedList) {
-    return `<ol>${listToHTML(node.children)}</ol>`;
+    return `<ol${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</ol>`;
 }
 
 function p(node: Paragraph) {
-    return `<p>${inlineListToHTML(node.children)}</p>`;
+    return `<p${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</p>`;
 }
 
 function li(node: ListItem) {
-    return `<li>${listToHTML(node.children)}</li>`;
+    return `<li${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</li>`;
 }
 
 function img(node: Image) {
-    return `<img src="${node.source}" alt="${node.description}">`;
+    return `<img src="${node.source}" alt="${node.description}"${attributesToHTML(node.attributes)}>`;
 }
 
 function table(node: Table) {
     const headerRow = `<tr>${node.header.map(cell => `<th>${cell}</th>`).join("")}</tr>`;
     const bodyRows = node.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`);
 
-    return `<table><thead>${headerRow}</thead><tbody>${bodyRows.join("")}</tbody></table>`;
+    return `<table${attributesToHTML(node.attributes)}><thead>${headerRow}</thead><tbody>${bodyRows.join("")}</tbody></table>`;
 }
 

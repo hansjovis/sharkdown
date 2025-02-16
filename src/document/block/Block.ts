@@ -6,9 +6,9 @@ export default class Block extends Node {
         public readonly blockType: string,
         public readonly id: string = null,
         public readonly classes: string[] = [],
-        public readonly attributes: Object = {},
+        attributes: Object = {},
         children: any[] = [],
     ){
-        super(children);
+        super(children, attributes);
     }
 }
