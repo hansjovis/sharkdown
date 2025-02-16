@@ -8,7 +8,7 @@ it("can find nodes in a document by type", () => {
 Some paragraph text.
 
 ## Heading 2
-Some more paragraph text.
+Some more _paragraph_ text.
 
 ### Heading 3
 Even more paragraph text.`;

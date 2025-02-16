@@ -1,6 +1,10 @@
-export default class Strong {
+import Node from "../Node.js";
+
+export default class Strong extends Node {
     public readonly '@type': string = "Strong";
     constructor(
-        public children: any[] = [],
-    ) { }
+        children: any[] = [],
+    ) { 
+        super(children);
+    }
 }

@@ -1,6 +1,10 @@
-export default class Emphasis {
+import Node from "../Node.js";
+
+export default class Emphasis extends Node {
     public readonly '@type': string = "Emphasis";
     constructor(
-        public children: any[] = [],
-    ) { }
+        children: any[] = [],
+    ) { 
+        super(children);
+    }
 }
