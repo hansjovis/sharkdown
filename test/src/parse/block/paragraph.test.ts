@@ -12,6 +12,11 @@ it("can parse a simple paragraph", () => {
     const paragraph = parse(tokens);
 
     strictEqual(paragraph.children.length, 2);
-    strictEqual(paragraph.children[0], "This is a simple paragraph");
-    strictEqual(paragraph.children[1], "with some text.");
+    const [text1, text2] = paragraph.children;
+
+    strictEqual(text1["@type"], "Text");
+    strictEqual(text1.text, "This is a simple paragraph");
+
+    strictEqual(text2["@type"], "Text");
+    strictEqual(text2.text, "with some text.");
 });

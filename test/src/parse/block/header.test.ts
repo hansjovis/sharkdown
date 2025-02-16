@@ -15,9 +15,18 @@ it("can parse a simple header", () => {
     strictEqual(header.children.length, 3);
 
     // Check contents of header.
-    strictEqual(header.children[0], "Header ");
-    strictEqual(header.children[1]["@type"], "Emphasis");
-    strictEqual(header.children[1].children.length, 1);
-    strictEqual(header.children[1].children[0], "level");
-    strictEqual(header.children[2], " 2");
+    const [text1, emphasis, text2] = header.children;
+
+    strictEqual(text1["@type"], "Text");
+    strictEqual(text1.text, "Header ");
+
+    strictEqual(emphasis["@type"], "Emphasis");
+    strictEqual(emphasis.children.length, 1);
+
+    const [text3] = emphasis.children;
+    strictEqual(text3["@type"], "Text");
+    strictEqual(text3.text, "level");
+
+    strictEqual(text2["@type"], "Text");
+    strictEqual(text2.text, " 2");
 });

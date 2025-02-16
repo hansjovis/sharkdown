@@ -10,6 +10,7 @@ import parseStrong from "./strong.js";
 import parseEmphasis from "./emphasis.js";
 import parseAnchor from "./anchor.js";
 import parseCode from "./code.js";
+import parseText from "./text.js";
 
 export default function parse(text: string): any[] {
     const tokens = tokenize(text);
@@ -22,7 +23,7 @@ export default function parse(text: string): any[] {
             case Emphasis:  child = parseEmphasis(tokens); break;
             case Anchor:    child = parseAnchor(tokens); break;
             case Code:      child = parseCode(tokens); break;
-            case Text:      child = tokens[0].raw; tokens.shift(); break;
+            case Text:      child = parseText(tokens); break;
             default:        child = null; tokens.shift(); break;
         }
         elements.push(child);

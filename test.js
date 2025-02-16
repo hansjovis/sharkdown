@@ -30,7 +30,7 @@ function highlightHTML(html) {
 const text = await readFile('test.md', 'utf8');
 
 const document = parse(text);
-const json = JSON.stringify(document, null, 2);
+const json = JSON.stringify(document, (key, value) => key !== "parent" ? value : undefined, 2);
 
 console.log('Document:');
 console.log(highlightJSON(json));

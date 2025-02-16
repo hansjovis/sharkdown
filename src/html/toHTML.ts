@@ -45,15 +45,12 @@ function listToHTML(nodes: any[]): string {
 function inlineListToHTML(nodes: any[]): string {
     let str = "";
     for(const node of nodes) {
-        if (typeof node === "string") {
-            str += node;
-            continue;
-        }
         switch(node['@type']) {
             case "Strong":      str += strong(node); break;
             case "Emphasis":    str += em(node); break;
             case "Anchor":      str += anchor(node); break;
             case "InlineCode":  str += code(node); break;
+            case "Text":        str += node.text; break;
         }
     }
     return str;
@@ -100,7 +97,8 @@ function anchor(node: Anchor): string {
 }
 
 function code(node: InlineCode): string {
-    return `<code${attributesToHTML(node.attributes)}>${node.text}</code>`;
+    const children = node.children.map(child => child.text).join("");
+    return `<code${attributesToHTML(node.attributes)}>${children}</code>`;
 }
 
 function h(node: Header): string {
@@ -108,7 +106,8 @@ function h(node: Header): string {
 }
 
 function pre(node: Code): string {
-    return `<pre class="${node.language}"${attributesToHTML(node.attributes)}>${node.children.join("\n")}</pre>`;
+    const children = node.children.map(child => child.text).join("\n");
+    return `<pre class="${node.language}"${attributesToHTML(node.attributes)}>${children}</pre>`;
 }
 
 function blockquote(node: Quote): string {

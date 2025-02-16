@@ -1,4 +1,5 @@
 import { Token } from "./tokenize/block/tokens/Token.js";
+import Node from "./document/Node.js";
 import Document from "./document/Document.js";
 
 import parseBlock from "./parse/block/block.js";
@@ -18,7 +19,7 @@ export function parseTokens(tokens: Token[], config: ParseConfiguration = defaul
     const doc = new Document();
     while(tokens[0]) {
         const name = tokens[0].constructor.name;
-        let child;
+        let child: Node;
         switch(name) {
             case "Block":               child = parseBlock(tokens, config); break;
             case "Header":              child = parseHeader(tokens); break;

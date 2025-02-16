@@ -1,6 +1,7 @@
 import { Token } from "../../tokenize/block/tokens/Token.js";
 import { Code as CodeToken } from "../../tokenize/block/tokens/Code.js";
 import Code from "../../document/block/Code.js";
+import Text from "../../document/inline/Text.js";
 
 export default function parse(tokens: Token[]): Code {
     let token = tokens.shift() as CodeToken;
@@ -9,7 +10,7 @@ export default function parse(tokens: Token[]): Code {
     );
     while(tokens[0] && tokens[0].constructor.name !== "Code") {
         token = tokens.shift() as CodeToken; 
-        code.children.push(token.rawContents);
+        code.children.push(new Text(token.rawContents));
     }
     // Consume end-of-code token.
     tokens.shift();

@@ -14,8 +14,14 @@ it("can parse a simple code block", () => {
     const tokens = tokenize(text);
     const codeBlock = parse(tokens);
 
+    const [text1, text2] = codeBlock.children;
+
     strictEqual(codeBlock.language, "javascript");
     strictEqual(codeBlock.children.length, 2);
-    strictEqual(codeBlock.children[0], "    const x = 2 + 3;");
-    strictEqual(codeBlock.children[1], "    const y = x - 5;");
+
+    strictEqual(text1["@type"], "Text");
+    strictEqual(text1.text, "    const x = 2 + 3;");
+
+    strictEqual(text2["@type"], "Text");
+    strictEqual(text2.text, "    const y = x - 5;");
 });

@@ -1,10 +1,11 @@
 import Node from "../Node.js";
+import Text from "./Text.js";
 
 export default class Code extends Node{
     public readonly '@type': string = "InlineCode";
     constructor(
-        public text: string
+        text: string
     ) { 
-        super();
+        super([new Text(text)]);
     }
 }
