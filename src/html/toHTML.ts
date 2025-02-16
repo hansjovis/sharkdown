@@ -97,7 +97,7 @@ function code(node: InlineCode): string {
 }
 
 function h(node: Header): string {
-    return `<h${node.level}>${node.contents}</h${node.level}>`
+    return `<h${node.level}>${inlineListToHTML(node.children)}</h${node.level}>`
 }
 
 function pre(node: Code): string {
