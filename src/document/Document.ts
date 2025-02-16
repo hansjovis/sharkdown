@@ -1,7 +1,10 @@
+import Node from "./Node.js";
 
-export default class Document {
+export default class Document extends Node {
     public readonly '@type': string = "Document";
     constructor(
-        public children: any[] = [],
-    ){}
+        children: any[] = [],
+    ){
+        super(children);
+    }
 }

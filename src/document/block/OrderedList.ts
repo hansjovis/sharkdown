@@ -1,6 +1,10 @@
-export default class OrderedList {
+import Node from "../Node.js";
+
+export default class OrderedList extends Node {
     public readonly '@type': string = "OrderedList";
     constructor(
-        public children: any[] = []
-    ){}
+        children: any[] = []
+    ){
+        super(children);
+    }
 }

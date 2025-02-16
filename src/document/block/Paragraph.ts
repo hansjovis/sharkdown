@@ -1,7 +1,10 @@
+import Node from "../Node.js";
 
-export default class Paragraph {
+export default class Paragraph extends Node {
     public readonly '@type': string = "Paragraph";
     constructor(
-        public children: string[]
-    ){}
+        children: string[]
+    ){
+        super(children);
+    }
 }

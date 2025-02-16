@@ -1,6 +1,10 @@
-export default class ListItem {
+import Node from "../Node.js";
+
+export default class ListItem extends Node {
     public readonly '@type': string = "ListItem";
     constructor(
-        public children: any[] = [],
-    ){}
+        children: any[] = [],
+    ){
+        super(children);
+    }
 }

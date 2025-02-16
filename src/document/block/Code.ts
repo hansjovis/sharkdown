@@ -1,8 +1,11 @@
+import Node from "../Node.js";
 
-export default class Code {
+export default class Code extends Node {
     public readonly '@type': string = "Code";
     constructor(
         public readonly language: string,
-        public children: any[] = [],
-    ){}
+        children: any[] = [],
+    ){
+        super(children);
+    }
 }
