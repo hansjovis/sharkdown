@@ -56,6 +56,10 @@ export default class Node {
         this.attributes[key] = value;
     }
 
+    getAttribute(key: string): any {
+        return this.attributes[key];
+    }
+
     removeAttribute(key: string) {
         delete this.attributes[key];
     }
