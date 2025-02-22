@@ -34,7 +34,7 @@ export function parseTokens(tokens: Token[], config: ParseConfiguration = defaul
             default:                    child = null; tokens.shift(); break;
         }
         if (child) {
-            doc.children.push(child);
+            doc.appendChild(child);
         }
     }
     return doc;

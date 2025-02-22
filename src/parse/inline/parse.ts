@@ -11,8 +11,9 @@ import parseEmphasis from "./emphasis.js";
 import parseAnchor from "./anchor.js";
 import parseCode from "./code.js";
 import parseText from "./text.js";
+import Node from "../../document/Node.js";
 
-export default function parse(text: string): any[] {
+export default function parse(text: string): Node[] {
     const tokens = tokenize(text);
     const elements = [];
     while(tokens[0]) {

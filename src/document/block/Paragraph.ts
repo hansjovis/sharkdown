@@ -3,7 +3,7 @@ import Node from "../Node.js";
 export default class Paragraph extends Node {
     public readonly '@type': string = "Paragraph";
     constructor(
-        children: string[]
+        children: Node[]
     ){
         super(children);
     }

@@ -10,7 +10,7 @@ export default function parse(tokens: Token[]): Code {
     );
     while(tokens[0] && tokens[0].constructor.name !== "Code") {
         token = tokens.shift() as CodeToken; 
-        code.children.push(new Text(token.rawContents));
+        code.appendChild(new Text(token.rawContents));
     }
     // Consume end-of-code token.
     tokens.shift();

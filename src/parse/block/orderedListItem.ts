@@ -17,7 +17,7 @@ export default function parse(tokens: Token[], config: ParseConfiguration): List
     }
     
     const doc = parseSharkdown(contents, config);
-    item.children = doc.children;
+    item.appendChildren(doc.children);
 
     return item;
 }

@@ -44,8 +44,8 @@ export default function parse(tokens: Token[], config: ParseConfiguration): Bloc
         attributes,
     );
     
-    block.children = parseTokens(tokens, config).children;
-    block.children.forEach(child => child.setParent(block));
+    const children = parseTokens(tokens, config).children;
+    block.appendChildren(children);
 
     if(block.blockType.match(/^[A-Z]/)) {
         // Custom block (starts with a capital letter).

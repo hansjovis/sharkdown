@@ -1,6 +1,6 @@
 
 export default class Node {
-    public readonly '@type': string = "Block";
+    public readonly '@type': string = "Node";
     public parent: Node | null = null;
 
     constructor(
@@ -54,11 +54,17 @@ export default class Node {
 
     public appendChild(child: Node) {
         this.children.push(child);
+        child.remove();
         child.setParent(this);
+    }
+
+    public appendChildren(children: Node[]) {
+        children.forEach(child => this.appendChild(child));
     }
 
     public prependChild(child: Node) {
         this.children.unshift(child);
+        child.remove();
         child.setParent(this);
     }
 
@@ -68,7 +74,7 @@ export default class Node {
 
     public remove() {
         if (this.parent) {
-            this.parent.children = this.parent.children.filter(child => child !== this);
+            this.parent.removeChild(this);
         }
     }
 
@@ -77,6 +83,24 @@ export default class Node {
             return this.parent.children.filter(child => child !== this);
         }
         return [];
+    }
+
+    public insertBefore(node: Node) {
+        if (this.parent) {
+            const index = this.parent.children.indexOf(this);
+            this.parent.children.splice(index, 0, node);
+            node.remove();
+            node.setParent(this.parent);
+        }
+    }
+
+    public insertAfter(node: Node) {
+        if (this.parent) {
+            const index = this.parent.children.indexOf(this);
+            this.parent.children.splice(index + 1, 0, node);
+            node.remove();
+            node.setParent(this.parent);
+        }
     }
 
     public setAttribute(key: string, value: any) {

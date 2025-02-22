@@ -13,7 +13,7 @@ export default function parse(tokens: any[]): Strong {
     }
     tokens.shift();
 
-    strong.children = parseInline(contents);
+    strong.appendChildren(parseInline(contents));
 
     return strong;
 }

@@ -9,7 +9,7 @@ export default function parse(tokens: Token[]): Paragraph {
 
     while(tokens[0] && tokens[0] instanceof Text) {
         token = tokens.shift() as Text; 
-        paragraph.children.push(...parseInline(token.contents));
+        paragraph.appendChildren(parseInline(token.contents));
     }
 
     return paragraph;

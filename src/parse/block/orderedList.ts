@@ -8,7 +8,7 @@ export default function parse(tokens: Token[], config: ParseConfiguration = defa
 
     while(tokens[0] && tokens[0].constructor.name === "OrderedListItem") {
         const item = parseOrderedListItem(tokens, config);
-        list.children.push(item);
+        list.appendChild(item);
     }
 
     return list;
