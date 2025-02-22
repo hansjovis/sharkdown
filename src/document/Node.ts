@@ -52,15 +52,42 @@ export default class Node {
         return null;
     }
 
-    setAttribute(key: string, value: any) {
+    public appendChild(child: Node) {
+        this.children.push(child);
+        child.setParent(this);
+    }
+
+    public prependChild(child: Node) {
+        this.children.unshift(child);
+        child.setParent(this);
+    }
+
+    public removeChild(child: Node) {
+        this.children = this.children.filter(c => c !== child);
+    }
+
+    public remove() {
+        if (this.parent) {
+            this.parent.children = this.parent.children.filter(child => child !== this);
+        }
+    }
+
+    public get siblings(): Node[] {
+        if (this.parent) {
+            return this.parent.children.filter(child => child !== this);
+        }
+        return [];
+    }
+
+    public setAttribute(key: string, value: any) {
         this.attributes[key] = value;
     }
 
-    getAttribute(key: string): any {
+    public getAttribute(key: string): any {
         return this.attributes[key];
     }
 
-    removeAttribute(key: string) {
+    public removeAttribute(key: string) {
         delete this.attributes[key];
     }
 
