@@ -50,8 +50,14 @@ Even more paragraph text.`;
 
     const header = new Block("header");
     header.appendChild(title);
-    
+
     document.prependChild(header);
 
-    console.log(toHtml(document));
+    const [ newHeader ] = document.children;
+    const [ titleNode ] = newHeader.children;
+
+    strictEqual(newHeader["@type"], "Block");
+    strictEqual(newHeader.blockType, "header");
+    strictEqual(titleNode["@type"], "Header");
+    strictEqual(titleNode.level, 1);
 });
