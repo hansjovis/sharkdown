@@ -4,6 +4,6 @@ export default class ListItem extends Node {
     constructor(
         children: any[] = [],
     ){
-        super("li", children);
+        super(children);
     }
 }

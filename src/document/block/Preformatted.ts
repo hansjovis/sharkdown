@@ -5,6 +5,6 @@ export default class Preformatted extends Node {
         public readonly language: string,
         children: any[] = [],
     ){
-        super("pre", children);
+        super(children);
     }
 }

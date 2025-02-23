@@ -5,10 +5,12 @@ export default class Block extends Node {
     constructor(
         type: string,
         public tag: string,
-        attributes: Object = {},
+        public id: string = "",
+        public classes: string[] = [],
+        public attributes: Object = {},
         children: any[] = [],
     ){
-        super(tag, children, attributes);
+        super(children);
         this['@type'] = type;
     }
 }

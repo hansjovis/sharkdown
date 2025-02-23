@@ -4,6 +4,6 @@ export default class Text extends Node {
     constructor(
         public text: string,
     ){
-        super("#text");
+        super();
     }
 }

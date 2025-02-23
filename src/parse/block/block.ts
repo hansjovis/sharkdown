@@ -41,13 +41,12 @@ export default function parse(tokens: Token[], config: ParseConfiguration): Bloc
     }
     const attributes = filterAllowedAttributes(token.attributes, config.attributes.allowed);
 
-    attributes.id = attributes.id || token.id;
-    attributes.class = attributes.class || token.classes.join(" ");
-
     const block = new Block(
         capitalizeFirstLetter(token.type),
         token.type,
-        attributes,
+        token.id,
+        token.classes,
+        attributes
     );
     
     const children = parseTokens(tokens, config).children;

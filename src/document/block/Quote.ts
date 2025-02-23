@@ -4,6 +4,6 @@ export default class Quote extends Node {
     constructor(
         public children: any[] = [],
     ) {
-        super("blockquote", children);
+        super(children);
     }
 }

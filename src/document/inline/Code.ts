@@ -5,6 +5,6 @@ export default class Code extends Node{
     constructor(
         text: string
     ) { 
-        super("code", [new Text(text)]);
+        super([new Text(text)]);
     }
 }

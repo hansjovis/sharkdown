@@ -4,6 +4,6 @@ export default class Emphasis extends Node {
     constructor(
         children: any[] = [],
     ) { 
-        super("em", children);
+        super(children);
     }
 }

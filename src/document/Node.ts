@@ -4,9 +4,7 @@ export default class Node {
     public parent: Node | null = null;
 
     constructor(
-        public readonly tag: string,
         public children: any[] = [],
-        public attributes: Record<string, any> = {},
     ){
         this['@type'] = this.constructor.name;
         this.children.forEach(child => {
@@ -103,18 +101,6 @@ export default class Node {
             node.remove();
             node.setParent(this.parent);
         }
-    }
-
-    public setAttribute(key: string, value: any) {
-        this.attributes[key] = value;
-    }
-
-    public getAttribute(key: string): any {
-        return this.attributes[key];
-    }
-
-    public removeAttribute(key: string) {
-        delete this.attributes[key];
     }
 
     public setParent(parent: Node) {

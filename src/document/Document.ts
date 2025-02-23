@@ -4,6 +4,6 @@ export default class Document extends Node {
     constructor(
         children: any[] = [],
     ){
-        super("#document", children);
+        super(children);
     }
 }

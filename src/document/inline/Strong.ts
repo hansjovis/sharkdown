@@ -4,6 +4,6 @@ export default class Strong extends Node {
     constructor(
         children: any[] = [],
     ) { 
-        super("strong", children);
+        super(children);
     }
 }

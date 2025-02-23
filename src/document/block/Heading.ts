@@ -6,6 +6,6 @@ export default class Heading extends Node {
         public readonly level: Number,
         children: any[] = []
     ){
-        super(`h${level}`, children);
+        super(children);
     }
 }

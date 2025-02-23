@@ -5,6 +5,6 @@ export default class Anchor extends Node {
         public href: string = "",
         children: any[] = [],
     ) { 
-        super("a", children);
+        super(children);
     }
 }

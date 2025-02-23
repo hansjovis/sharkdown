@@ -71,12 +71,12 @@ function block(node: Block): string {
         return '';
     }
 
-    const id = node.attributes.id
-        ? ` id="${node.attributes.id}"` 
+    const id = node.id
+        ? ` id="${node.id}"` 
         : "";
     
-    const classes = node.attributes.classList.length > 0
-        ? ` class="${node.attributes.classList.join(" ")}"` 
+    const classes = node.classes.length > 0
+        ? ` class="${node.classes.join(" ")}"` 
         : "";
 
     const attributes = attributesToHTML(node.attributes);
@@ -85,59 +85,59 @@ function block(node: Block): string {
 }
 
 function strong(node: Strong): string {
-    return `<strong${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</strong>`;
+    return `<strong>${inlineListToHTML(node.children)}</strong>`;
 }
 
 function em(node: Emphasis): string {
-    return `<em${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</em>`;
+    return `<em>${inlineListToHTML(node.children)}</em>`;
 }
 
 function anchor(node: Anchor): string {
-    return `<a href="${node.href}"${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</a>`;
+    return `<a href="${node.href}">${inlineListToHTML(node.children)}</a>`;
 }
 
 function code(node: InlineCode): string {
     const children = node.children.map(child => child.text).join("");
-    return `<code${attributesToHTML(node.attributes)}>${children}</code>`;
+    return `<code>${children}</code>`;
 }
 
 function h(node: Heading): string {
-    return `<h${node.level}${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</h${node.level}>`
+    return `<h${node.level}>${inlineListToHTML(node.children)}</h${node.level}>`
 }
 
 function pre(node: Preformatted): string {
     const children = node.children.map(child => child.text).join("\n");
-    return `<pre class="${node.language}"${attributesToHTML(node.attributes)}>${children}</pre>`;
+    return `<pre class="${node.language}">${children}</pre>`;
 }
 
 function blockquote(node: Quote): string {
-    return `<blockquote${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</blockquote>`;
+    return `<blockquote>${listToHTML(node.children)}</blockquote>`;
 }
 
 function ul(node: UnorderedList): string {
-    return `<ul${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</ul>`;
+    return `<ul>${listToHTML(node.children)}</ul>`;
 }
 
 function ol(node: OrderedList) {
-    return `<ol${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</ol>`;
+    return `<ol>${listToHTML(node.children)}</ol>`;
 }
 
 function p(node: Paragraph) {
-    return `<p${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</p>`;
+    return `<p>${inlineListToHTML(node.children)}</p>`;
 }
 
 function li(node: ListItem) {
-    return `<li${attributesToHTML(node.attributes)}>${listToHTML(node.children)}</li>`;
+    return `<li>${listToHTML(node.children)}</li>`;
 }
 
 function img(node: Image) {
-    return `<img src="${node.source}" alt="${node.description}"${attributesToHTML(node.attributes)}>`;
+    return `<img src="${node.source}" alt="${node.description}">`;
 }
 
 function table(node: Table) {
     const headerRow = `<tr>${node.header.map(cell => `<th>${cell}</th>`).join("")}</tr>`;
     const bodyRows = node.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`);
 
-    return `<table${attributesToHTML(node.attributes)}><thead>${headerRow}</thead><tbody>${bodyRows.join("")}</tbody></table>`;
+    return `<table><thead>${headerRow}</thead><tbody>${bodyRows.join("")}</tbody></table>`;
 }
 

@@ -5,6 +5,6 @@ export default class Image extends Node {
         public readonly source: string,
         public readonly description: string,
     ){
-        super("img");
+        super();
     }
 }

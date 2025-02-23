@@ -4,6 +4,6 @@ export default class Paragraph extends Node {
     constructor(
         children: Node[]
     ){
-        super("p", children);
+        super(children);
     }
 }
