@@ -1,7 +1,7 @@
 import Node from "../Node.js";
 
-export default class Header extends Node {
-    public readonly '@type': string = "Header";
+export default class Heading extends Node {
+    public readonly '@type': string = "Heading";
     constructor(
         public readonly level: Number,
         children: any[] = []

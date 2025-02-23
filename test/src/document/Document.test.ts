@@ -18,11 +18,11 @@ Even more paragraph text.`;
     const document = parse(text);
 
     const headings = document.findAll(
-        node => node["@type"] === "Header"
+        node => node["@type"] === "Heading"
     );
 
     strictEqual(headings.length, 3);
-    headings.forEach(heading => strictEqual(heading["@type"], "Header"));
+    headings.forEach(heading => strictEqual(heading["@type"], "Heading"));
 
     const paragraphs = document.findAll(
         node => node["@type"] === "Paragraph"
@@ -45,7 +45,7 @@ Even more paragraph text.`;
     const document = parse(text);
 
     const title = document.findOne(
-        node => node["@type"] === "Header" && node.level === 1
+        node => node["@type"] === "Heading" && node.level === 1
     );
 
     const header = new Block("header");
@@ -53,11 +53,11 @@ Even more paragraph text.`;
 
     document.prependChild(header);
 
-    const [ newHeader ] = document.children;
-    const [ titleNode ] = newHeader.children;
+    const [ newHeading ] = document.children;
+    const [ titleNode ] = newHeading.children;
 
-    strictEqual(newHeader["@type"], "Block");
-    strictEqual(newHeader.blockType, "header");
-    strictEqual(titleNode["@type"], "Header");
+    strictEqual(newHeading["@type"], "Block");
+    strictEqual(newHeading.blockType, "header");
+    strictEqual(titleNode["@type"], "Heading");
     strictEqual(titleNode.level, 1);
 });

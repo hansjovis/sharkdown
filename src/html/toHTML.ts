@@ -1,7 +1,7 @@
 import Block from "../document/block/Block.js";
 import Code from "../document/block/Code.js";
 import Document from "../document/Document.js";
-import Header from "../document/block/Header.js";
+import Heading from "../document/block/Heading.js";
 import Image from "../document/block/Image.js";
 import ListItem from "../document/block/ListItem.js";
 import OrderedList from "../document/block/OrderedList.js";
@@ -27,7 +27,7 @@ function listToHTML(nodes: any[]): string {
     for(const node of nodes) {
         switch(node['@type']) {
             case "Block":           str += block(node); break;
-            case "Header":          str += h(node); break;
+            case "Heading":          str += h(node); break;
             case "Code":            str += pre(node); break;
             case "Quote":           str += blockquote(node); break;
             case "UnorderedList":   str += ul(node); break;
@@ -101,7 +101,7 @@ function code(node: InlineCode): string {
     return `<code${attributesToHTML(node.attributes)}>${children}</code>`;
 }
 
-function h(node: Header): string {
+function h(node: Heading): string {
     return `<h${node.level}${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</h${node.level}>`
 }
 

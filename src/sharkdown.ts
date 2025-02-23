@@ -4,7 +4,7 @@ import Document from "./document/Document.js";
 
 import parseBlock from "./parse/block/block.js";
 import parseCode from "./parse/block/code.js";
-import parseHeader from "./parse/block/header.js";
+import parseHeading from "./parse/block/heading.js";
 import parseUnorderedList from "./parse/block/unorderedList.js";
 import parseOrderedList from "./parse/block/orderedList.js";
 import parseQuote from "./parse/block/quote.js";
@@ -22,7 +22,7 @@ export function parseTokens(tokens: Token[], config: ParseConfiguration = defaul
         let child: Node;
         switch(name) {
             case "Block":               child = parseBlock(tokens, config); break;
-            case "Header":              child = parseHeader(tokens); break;
+            case "Heading":             child = parseHeading(tokens); break;
             case "Code":                child = parseCode(tokens); break;
             case "UnorderedListItem":   child = parseUnorderedList(tokens, config); break;
             case "OrderedListItem":     child = parseOrderedList(tokens, config); break;

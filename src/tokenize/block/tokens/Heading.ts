@@ -1,7 +1,7 @@
 import { Token } from "./Token.js";
 
 
-export class Header extends Token {
+export class Heading extends Token {
     constructor(
         rawContents: string,
         indentation: number,
@@ -11,12 +11,12 @@ export class Header extends Token {
         super(rawContents, indentation);
     }
 
-    public static match(text: string): Header {
+    public static match(text: string): Heading {
         const match = text.match(/^(\s*)(#+) (.+)/);
         if (!match) {
             return null;
         }
-        return new Header(
+        return new Heading(
             match[0],
             match[1].length,
             match[3],

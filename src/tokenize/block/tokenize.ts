@@ -6,7 +6,7 @@ import { Image } from "./tokens/Image.js";
 import { OrderedListItem } from "./tokens/OrderedListItem.js";
 import { UnorderedListItem } from "./tokens/UnorderedListItem.js";
 import { Quote } from "./tokens/Quote.js";
-import { Header } from "./tokens/Header.js";
+import { Heading } from "./tokens/Heading.js";
 import { Block } from "./tokens/Block.js";
 import { BlockEnd } from "./tokens/BlockEnd.js";
 import { TableRow } from "./tokens/TableRow.js";
@@ -19,7 +19,7 @@ function splitLines(text: string): string[] {
 const TokenTypes = [
     Block,
     BlockEnd,
-    Header,
+    Heading,
     Quote,
     UnorderedListItem,
     OrderedListItem,
