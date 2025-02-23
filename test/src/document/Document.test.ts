@@ -56,8 +56,8 @@ Even more paragraph text.`;
     const [ newHeading ] = document.children;
     const [ titleNode ] = newHeading.children;
 
-    strictEqual(newHeading["@type"], "Block");
-    strictEqual(newHeading.blockType, "header");
+    strictEqual(newHeading["@type"], "Header");
+    strictEqual(newHeading.tag, "header");
     strictEqual(titleNode["@type"], "Heading");
     strictEqual(titleNode.level, 1);
 });

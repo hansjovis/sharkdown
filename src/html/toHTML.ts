@@ -66,8 +66,8 @@ function attributesToHTML(attributes: Record<string,any>): string {
 }
 
 function block(node: Block): string {
-    if (node.blockType.match(/^[A-Z]/)) {
-        // Unrecognized block.
+    if (node.tag.match(/^[A-Z]/)) {
+        // Custom block
         return '';
     }
 
@@ -81,7 +81,7 @@ function block(node: Block): string {
 
     const attributes = attributesToHTML(node.attributes);
         
-    return `<${node.blockType}${id}${classes}${attributes}>${listToHTML(node.children)}</${node.blockType}>`;
+    return `<${node.tag}${id}${classes}${attributes}>${listToHTML(node.children)}</${node.tag}>`;
 }
 
 function strong(node: Strong): string {
