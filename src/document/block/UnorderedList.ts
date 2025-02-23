@@ -5,6 +5,6 @@ export default class UnorderedList extends Node {
     constructor(
         children: any[] = [],
     ){
-        super(children);
+        super("ul", children);
     }
 }

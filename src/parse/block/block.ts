@@ -29,6 +29,10 @@ function filterAllowedAttributes(attributes: Record<string, string>, allowed: (s
     return filtered;
 }
 
+function capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export default function parse(tokens: Token[], config: ParseConfiguration): Block|null {
     let token = tokens.shift() as BlockToken;
 
@@ -37,10 +41,12 @@ export default function parse(tokens: Token[], config: ParseConfiguration): Bloc
     }
     const attributes = filterAllowedAttributes(token.attributes, config.attributes.allowed);
 
+    attributes.id = attributes.id || token.id;
+    attributes.class = attributes.class || token.classes.join(" ");
+
     const block = new Block(
+        capitalizeFirstLetter(token.type),
         token.type,
-        token.id,
-        token.classes,
         attributes,
     );
     

@@ -1,11 +1,10 @@
 import Node from "../Node.js";
 
-export default class Code extends Node {
-    public readonly '@type': string = "Code";
+export default class Preformatted extends Node {
     constructor(
         public readonly language: string,
         children: any[] = [],
     ){
-        super(children);
+        super("pre", children);
     }
 }

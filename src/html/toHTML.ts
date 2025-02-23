@@ -1,5 +1,5 @@
 import Block from "../document/block/Block.js";
-import Code from "../document/block/Code.js";
+import Preformatted from "../document/block/Preformatted.js";
 import Document from "../document/Document.js";
 import Heading from "../document/block/Heading.js";
 import Image from "../document/block/Image.js";
@@ -71,12 +71,12 @@ function block(node: Block): string {
         return '';
     }
 
-    const id = node.id
-        ? ` id="${node.id}"` 
+    const id = node.attributes.id
+        ? ` id="${node.attributes.id}"` 
         : "";
     
-    const classes = node.classes.length > 0
-        ? ` class="${node.classes.join(" ")}"` 
+    const classes = node.attributes.classList.length > 0
+        ? ` class="${node.attributes.classList.join(" ")}"` 
         : "";
 
     const attributes = attributesToHTML(node.attributes);
@@ -105,7 +105,7 @@ function h(node: Heading): string {
     return `<h${node.level}${attributesToHTML(node.attributes)}>${inlineListToHTML(node.children)}</h${node.level}>`
 }
 
-function pre(node: Code): string {
+function pre(node: Preformatted): string {
     const children = node.children.map(child => child.text).join("\n");
     return `<pre class="${node.language}"${attributesToHTML(node.attributes)}>${children}</pre>`;
 }

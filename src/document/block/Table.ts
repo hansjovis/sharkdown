@@ -6,6 +6,6 @@ export default class Table extends Node {
         public readonly header: string[] = [],
         public rows: string[][] = [],
     ) {
-        super();
+        super("table", []);
     }
 }

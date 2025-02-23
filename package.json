@@ -9,7 +9,7 @@
   },
   "scripts": {
     "compile": "rm -rf ./dist && npx tsc",
-    "test": "cd test && npx tsc && node --test ./dist/test"
+    "test": "cd test && rm -rf ./dist && npx tsc && node --test ./dist/test"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",

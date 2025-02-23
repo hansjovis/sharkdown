@@ -2,7 +2,6 @@ import { it } from "node:test";
 import { strictEqual } from "node:assert";
 
 import parse from "../../../src/sharkdown.js";
-import toHtml from "../../../src/html/toHtml.js";
 import Block from "../../../src/document/block/Block.js";
 
 it("can find nodes in a document by type", () => {
@@ -48,7 +47,7 @@ Even more paragraph text.`;
         node => node["@type"] === "Heading" && node.level === 1
     );
 
-    const header = new Block("header");
+    const header = new Block("Header", "header");
     header.appendChild(title);
 
     document.prependChild(header);

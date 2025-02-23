@@ -1,12 +1,14 @@
 
 export default class Node {
-    public readonly '@type': string = "Node";
+    public readonly '@type': string;
     public parent: Node | null = null;
 
     constructor(
+        public readonly tag: string,
         public children: any[] = [],
         public attributes: Record<string, any> = {},
     ){
+        this['@type'] = this.constructor.name;
         this.children.forEach(child => {
             if (child instanceof Node) {
                 child.setParent(this);
