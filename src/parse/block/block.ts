@@ -42,7 +42,6 @@ export default function parse(tokens: Token[], config: ParseConfiguration): Bloc
     const attributes = filterAllowedAttributes(token.attributes, config.attributes.allowed);
 
     const block = new Block(
-        capitalizeFirstLetter(token.type),
         token.type,
         token.id,
         token.classes,

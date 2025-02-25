@@ -47,7 +47,7 @@ Even more paragraph text.`;
         node => node["@type"] === "Heading" && node.level === 1
     );
 
-    const header = new Block("Header", "header");
+    const header = new Block("header");
     header.appendChild(title);
 
     document.prependChild(header);
@@ -55,7 +55,6 @@ Even more paragraph text.`;
     const [ newHeading ] = document.children;
     const [ titleNode ] = newHeading.children;
 
-    strictEqual(newHeading["@type"], "Header");
     strictEqual(newHeading.tag, "header");
     strictEqual(titleNode["@type"], "Heading");
     strictEqual(titleNode.level, 1);

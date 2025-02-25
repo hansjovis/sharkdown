@@ -30,5 +30,10 @@ With a subtitle.
     const tokens = tokenize(text);
     const block = parse(tokens, config);
 
-    strictEqual(block?.tag, "header");
+    strictEqual(block.tag, "header");
+    strictEqual(block.id, "top");
+    
+    strictEqual(block.classes.length, 2);
+    strictEqual(block.classes[0], "ultra-wide");
+    strictEqual(block.classes[1], "very-awesome");
 });
