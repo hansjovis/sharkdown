@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "./dist",
         "esModuleInterop": true,
-        "module": "NodeNext"
+        "module": "NodeNext",
+        "sourceMap": true
     }
 }
