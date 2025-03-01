@@ -6,7 +6,7 @@ export class Heading extends Token {
         rawContents: string,
         indentation: number,
         public readonly contents: string,
-        public readonly level: Number
+        public readonly level: number
     ) {
         super(rawContents, indentation);
     }

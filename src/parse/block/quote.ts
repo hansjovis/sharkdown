@@ -15,7 +15,7 @@ export default function parse(tokens: Token[], config: ParseConfiguration): Quot
     }
 
     const doc = parseSharkdown(contents, config);
-    quote.children = doc.children;
+    quote.appendChildren(doc.children);
 
     return quote;
 }
