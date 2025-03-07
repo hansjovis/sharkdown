@@ -15,28 +15,47 @@ import Emphasis from "../document/inline/Emphasis.js";
 import Anchor from "../document/inline/Anchor.js";
 import InlineCode from "../document/inline/Code.js";
 
-export default function toHTML(document: Document): string {
+export interface Options {
+    /**
+     * Whether to pretty print the HTML output.
+     */
+    prettyPrint: boolean;
+};
+
+const defaultOptions: Options = {
+    prettyPrint: false
+};
+
+export default function toHTML(
+    document: Document, 
+    options: Options = defaultOptions
+): string {
     if (!document) {
         return "";
     }
-    return `<div class="document">${listToHTML(document.children)}</div>`;
+
+    const startTag = `<div class="document">`;
+    const children = listToHTML(document.children, 1, options);
+    const endTag = `</div>`;
+
+    return renderElement(startTag, children, endTag, 0, options);
 }
 
-function listToHTML(nodes: any[]): string {
+function listToHTML(nodes: any[], depth: number = 0, options: Options = defaultOptions): string {
     let str = "";
-    for(const node of nodes) {
-        switch(node['@type']) {
-            case "Block":           str += block(node); break;
-            case "Heading":          str += h(node); break;
-            case "Code":            str += pre(node); break;
-            case "Quote":           str += blockquote(node); break;
-            case "UnorderedList":   str += ul(node); break;
-            case "OrderedList":     str += ol(node); break;
-            case "Paragraph":       str += p(node); break;
-            case "Image":           str += img(node); break;
-            case "ListItem":        str += li(node); break;
+    for (const node of nodes) {
+        switch (node['@type']) {
+            case "Block":           str += block(node, depth, options); break;
+            case "Heading":         str += h(node, depth, options); break;
+            case "Preformatted":    str += pre(node, depth, options); break;
+            case "Quote":           str += blockquote(node, depth, options); break;
+            case "UnorderedList":   str += ul(node, depth, options); break;
+            case "OrderedList":     str += ol(node, depth, options); break;
+            case "Paragraph":       str += p(node, depth, options); break;
+            case "Image":           str += img(node, depth, options); break;
+            case "ListItem":        str += li(node, depth, options); break;
             case "Table":           str += table(node); break;
-            default:                str += ""; break;  
+            default:                str += ""; break;
         }
     }
     return str;
@@ -44,19 +63,59 @@ function listToHTML(nodes: any[]): string {
 
 function inlineListToHTML(nodes: any[]): string {
     let str = "";
-    for(const node of nodes) {
-        switch(node['@type']) {
-            case "Strong":      str += strong(node); break;
-            case "Emphasis":    str += em(node); break;
-            case "Anchor":      str += anchor(node); break;
-            case "InlineCode":  str += code(node); break;
-            case "Text":        str += node.text; break;
+    for (const node of nodes) {
+        switch (node['@type']) {
+            case "Strong": str += strong(node); break;
+            case "Emphasis": str += em(node); break;
+            case "Anchor": str += anchor(node); break;
+            case "InlineCode": str += code(node); break;
+            case "Text": str += node.text; break;
         }
     }
     return str;
 }
 
-function attributesToHTML(attributes: Record<string,any>): string {
+function renderElement(
+    startTag: string, 
+    content: string, 
+    endTag: string, 
+    depth: number,
+    options: Options
+): string {
+    if (options.prettyPrint) {
+        const padding = "  ".repeat(depth);
+        return `${padding}${startTag}\n${content}${padding}${endTag}\n`;
+    }
+    return `${startTag}${content}${endTag}`;
+}
+
+function renderElementInline(
+    startTag: string, 
+    content: string, 
+    endTag: string, 
+    depth: number,
+    options: Options
+): string {
+    if (options.prettyPrint) {
+        const padding = "  ".repeat(depth);
+        return `${padding}${startTag}${content}${endTag}\n`;
+    }
+    return `${startTag}${content}${endTag}`;
+}
+
+function renderText(
+    text: string, 
+    depth: number, 
+    options: Options
+): string {
+    if (options.prettyPrint) {
+        const padding = "  ".repeat(depth);
+        return `${padding}${text}\n`;
+    }
+    return text;
+}
+
+function attributesToHTML(attributes: Record<string, any>): string {
     if (Object.keys(attributes).length === 0) {
         return "";
     }
@@ -65,23 +124,27 @@ function attributesToHTML(attributes: Record<string,any>): string {
         .join(" ");
 }
 
-function block(node: Block): string {
+function block(node: Block, depth: number = 0, options: Options = defaultOptions): string {
     if (node.tag.match(/^[A-Z]/)) {
         // Custom block
         return '';
     }
 
     const id = node.id
-        ? ` id="${node.id}"` 
+        ? ` id="${node.id}"`
         : "";
-    
+
     const classes = node.classes.length > 0
-        ? ` class="${node.classes.join(" ")}"` 
+        ? ` class="${node.classes.join(" ")}"`
         : "";
 
     const attributes = attributesToHTML(node.attributes);
-        
-    return `<${node.tag}${id}${classes}${attributes}>${listToHTML(node.children)}</${node.tag}>`;
+
+    const startTag = `<${node.tag}${id}${classes}${attributes}>`;
+    const children = listToHTML(node.children, depth + 1, options);
+    const endTag = `</${node.tag}>`;
+
+    return renderElement(startTag, children, endTag, depth, options);
 }
 
 function strong(node: Strong): string {
@@ -101,36 +164,67 @@ function code(node: InlineCode): string {
     return `<code>${children}</code>`;
 }
 
-function h(node: Heading): string {
-    return `<h${node.level}>${inlineListToHTML(node.children)}</h${node.level}>`
+function h(node: Heading, depth: number = 0, options: Options = defaultOptions): string {
+    const startTag = `<h${node.level}>`;
+    const children = inlineListToHTML(node.children);
+    const endTag = `</h${node.level}>`;
+
+    return renderElementInline(startTag, children, endTag, depth, options);
 }
 
-function pre(node: Preformatted): string {
+function pre(node: Preformatted, depth: number = 0, options: Options = defaultOptions): string {
+    const startTag = `<pre class="${node.language}">`;
     const children = node.children.map(child => child.text).join("\n");
-    return `<pre class="${node.language}">${children}</pre>`;
+    const endTag = `</pre>`;
+
+    return renderElementInline(startTag, children, endTag, depth, options);
 }
 
-function blockquote(node: Quote): string {
-    return `<blockquote>${listToHTML(node.children)}</blockquote>`;
+function blockquote(node: Quote, depth: number = 0, options: Options = defaultOptions): string {
+    const startTag = `<blockquote>`;
+    const children = listToHTML(node.children, depth + 1, options);
+    const endTag = `</blockquote>`;
+
+    return renderElement(startTag, children, endTag, depth, options);
 }
 
-function ul(node: UnorderedList): string {
-    return `<ul>${listToHTML(node.children)}</ul>`;
+function ul(node: UnorderedList, depth: number = 0, options: Options = defaultOptions): string {
+    const startTag = `<ul>`;
+    const children = listToHTML(node.children, depth + 1, options);
+    const endTag = `</ul>`;
+
+    return renderElement(startTag, children, endTag, depth, options);
 }
 
-function ol(node: OrderedList) {
-    return `<ol>${listToHTML(node.children)}</ol>`;
+function ol(node: OrderedList, depth: number = 0, options: Options = defaultOptions): string {
+    const startTag = `<ol>`;
+    const children = listToHTML(node.children, depth + 1, options);
+    const endTag = `</ol>`;
+
+    return renderElement(startTag, children, endTag, depth, options);
 }
 
-function p(node: Paragraph) {
-    return `<p>${inlineListToHTML(node.children)}</p>`;
+function p(node: Paragraph, depth: number = 0, options: Options = defaultOptions): string {
+    const startTag = `<p>`;
+    const children = renderText(inlineListToHTML(node.children), depth + 1, options);
+    const endTag = `</p>`;
+
+    return renderElement(startTag, children, endTag, depth, options);
 }
 
-function li(node: ListItem) {
-    return `<li>${listToHTML(node.children)}</li>`;
+function li(node: ListItem, depth: number = 0, options: Options = defaultOptions): string {
+    const startTag = `<li>`;
+    const children = listToHTML(node.children, depth + 1, options);
+    const endTag = `</li>`;
+
+    return renderElement(startTag, children, endTag, depth, options);
 }
 
-function img(node: Image) {
+function img(node: Image, depth: number = 0, options: Options = defaultOptions): string {
+    if (options.prettyPrint) {
+        const padding = "  ".repeat(depth);
+        return `${padding}<img src="${node.source}" alt="${node.description}">\n`;
+    }
     return `<img src="${node.source}" alt="${node.description}">`;
 }
 

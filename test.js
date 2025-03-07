@@ -13,6 +13,11 @@ const COLORS = {
     green: '\x1b[32m',
     yellow: '\x1b[33m',
     blue: '\x1b[34m',
+    pink: '\x1b[35m',
+    cyan: '\x1b[36m',
+    orange: '\x1b[38;5;208m',
+    gray: '\x1b[38;5;240m',
+    reset: '\x1b[0m'
 };
 
 function highlight(text, color) {
@@ -24,7 +29,7 @@ function highlightJSON(json) {
 }
 
 function highlightHTML(html) {
-  return html.replace(/<.+?>/g, highlight('$&', COLORS.blue));
+  return html.replace(/<.+?>/g, highlight('$&', COLORS.yellow));
 }
 
 const text = await readFile('test.md', 'utf8');
@@ -35,7 +40,7 @@ const json = JSON.stringify(document, (key, value) => key !== "parent" ? value :
 console.log('Document:');
 console.log(highlightJSON(json));
 
-const html = toHTML(document);
+const html = toHTML(document, { prettyPrint: true });
 console.log('HTML:');
 console.log(highlightHTML(html));
 
