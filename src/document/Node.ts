@@ -54,7 +54,7 @@ export default class Node {
 
     public appendChild(child: Node) {
         this.children.push(child);
-        child.remove();
+        child.detach();
         child.setParent(this);
     }
 
@@ -64,7 +64,7 @@ export default class Node {
 
     public prependChild(child: Node) {
         this.children.unshift(child);
-        child.remove();
+        child.detach();
         child.setParent(this);
     }
 
@@ -72,10 +72,11 @@ export default class Node {
         this.children = this.children.filter(c => c !== child);
     }
 
-    public remove() {
+    public detach(): Node {
         if (this.parent) {
             this.parent.removeChild(this);
         }
+        return this;
     }
 
     public get siblings(): Node[] {
@@ -89,7 +90,7 @@ export default class Node {
         if (this.parent) {
             const index = this.parent.children.indexOf(this);
             this.parent.children.splice(index, 0, node);
-            node.remove();
+            node.detach();
             node.setParent(this.parent);
         }
     }
@@ -98,7 +99,7 @@ export default class Node {
         if (this.parent) {
             const index = this.parent.children.indexOf(this);
             this.parent.children.splice(index + 1, 0, node);
-            node.remove();
+            node.detach();
             node.setParent(this.parent);
         }
     }
