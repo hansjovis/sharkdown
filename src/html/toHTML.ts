@@ -1,6 +1,6 @@
 import Block from "../document/block/Block.js";
 import Preformatted from "../document/block/Preformatted.js";
-import Document from "../document/Document.js";
+import Node from "../document/Node.js";
 import Heading from "../document/block/Heading.js";
 import Image from "../document/block/Image.js";
 import ListItem from "../document/block/ListItem.js";
@@ -27,24 +27,17 @@ const defaultOptions: Options = {
 };
 
 export default function toHTML(
-    document: Document, 
+    node: Node, 
     options: Options = defaultOptions
 ): string {
-    if (!document) {
-        return "";
-    }
-
-    const startTag = `<div class="document">`;
-    const children = listToHTML(document.children, 1, options);
-    const endTag = `</div>`;
-
-    return renderElement(startTag, children, endTag, 0, options);
+    return listToHTML([node], 0, options);
 }
 
 function listToHTML(nodes: any[], depth: number = 0, options: Options = defaultOptions): string {
     let str = "";
     for (const node of nodes) {
         switch (node['@type']) {
+            case "Document":        str += listToHTML(node.children, depth, options); break;
             case "Block":           str += block(node, depth, options); break;
             case "Heading":         str += h(node, depth, options); break;
             case "Preformatted":    str += pre(node, depth, options); break;
